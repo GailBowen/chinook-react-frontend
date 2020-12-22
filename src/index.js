@@ -11,6 +11,7 @@ import { resolvers, typeDefs } from './graphql/resolvers';
 
 import App  from './App';
 import AlbumsContainer from './AlbumsContainer';
+import AlbumContainer from './AlbumContainer';
 import ArtistsContainer from './ArtistsContainer';
 import CustomersContainer from './CustomersContainer';
 import EmployeesContainer from './EmployeesContainer';
@@ -47,6 +48,9 @@ ReactDOM.render(
           </Route>
           <Route path="/albums">
             <AlbumsContainer />
+          </Route>
+          <Route path={"/album/:albumId"}>
+            <AlbumContainer />
           </Route>
           <Route path="/artists">
             <ArtistsContainer />

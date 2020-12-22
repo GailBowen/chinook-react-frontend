@@ -14,6 +14,10 @@ import AlbumsContainer from './AlbumsContainer';
 import ArtistsContainer from './ArtistsContainer';
 import CustomersContainer from './CustomersContainer';
 import EmployeesContainer from './EmployeesContainer';
+import GenresContainer from './GenresContainer';
+import MediaTypesContainer from './MediaTypesContainer';
+import PlaylistsContainer from './PlaylistsContainer';
+import TracksContainer from './TracksContainer';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -52,6 +56,18 @@ ReactDOM.render(
           </Route>
           <Route path="/employees">
             <EmployeesContainer />
+          </Route>
+          <Route path="/genres">
+            <GenresContainer />
+          </Route>
+          <Route path="/mediatypes">
+            <MediaTypesContainer />
+          </Route>
+          <Route path="/playlists">
+            <PlaylistsContainer />
+          </Route>
+          <Route path="/tracks">
+            <TracksContainer />
           </Route>
         </Switch>
       </BrowserRouter>

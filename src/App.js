@@ -11,6 +11,10 @@ function App() {
         <li><a href="/artists">Artists List</a></li>
         <li><a href="/customers">Customers List</a></li>
         <li><a href="/employees">Employees List</a></li>
+        <li><a href="/genres">Genres List</a></li>
+        <li><a href="/mediatypes">Media Types List</a></li>
+        <li><a href="/playlists">Playlists List</a></li>
+        <li><a href="/tracks">Tracks List</a></li>
       </ul>
     </div>
   );

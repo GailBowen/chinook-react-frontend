@@ -1,12 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-boost';
+import { resolvers, typeDefs } from './graphql/resolvers';
+
+import App  from './App';
+import AlbumsContainer from './AlbumsContainer';
+
 import reportWebVitals from './reportWebVitals';
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql'
+});
+
+const cache = new InMemoryCache();
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache,
+  typeDefs,
+  resolvers,
+  fetchOptions: {
+    mode: 'no-cors',
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <App />
+          </Route>
+          <Route path="/albums">
+            <AlbumsContainer />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

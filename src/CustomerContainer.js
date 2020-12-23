@@ -3,6 +3,7 @@ import { Query, useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
+import KeyValue from './KeyValue';
 
 const QUERY = gql`
   query getCustomer($customerId: Int!) {
@@ -32,7 +33,6 @@ const QUERY = gql`
 
 const CustomerContainer = () => {
   let { customerId } = useParams();
-  console.debug(customerId);
   customerId = parseInt(customerId);
 
   let { loading, error, data } = useQuery(QUERY, {
@@ -61,13 +61,13 @@ const Customer = (props) => {
       <h1>Customer</h1>
 
       <h2>Demographics</h2>
-      <Demographic label="Name" value={customerName} />
-      <Demographic label="Address" value={customer.Address} />
-      <Demographic label="City" value={customer.City} />
-      <Demographic label="State" value={customer.State} />
-      <Demographic label="Postal Code" value={customer.PostalCode} />
-      <Demographic label="Country" value={customer.Country} />
-      <Demographic label="Support Rep" value="TODO" />
+      <KeyValue label="Name" value={customerName} />
+      <KeyValue label="Address" value={customer.Address} />
+      <KeyValue label="City" value={customer.City} />
+      <KeyValue label="State" value={customer.State} />
+      <KeyValue label="Postal Code" value={customer.PostalCode} />
+      <KeyValue label="Country" value={customer.Country} />
+      <KeyValue label="Support Rep" value="TODO" />
 
       <h2>Invoices</h2>
       <Invoices invoices={invoices} />
@@ -75,15 +75,6 @@ const Customer = (props) => {
   );
 };
  
-const Demographic = (props) => {
-  return (
-    <>
-      <span className="demographicLabel">{props.label}: </span>
-      <span className="demographicText">{props.value}</span><br />
-    </>
-  );
-};
-
 const Invoices = (props) => {
   const invoices = props.invoices;
 
@@ -94,13 +85,17 @@ const Invoices = (props) => {
   return (
     <>
       <table>
-          <tr>
-            <th>Invoice No.</th>
-            <th>Date</th>
-            <th>Billing Address</th>
-            <th>Total</th>
-          </tr>
-          {invoiceLines}
+          <thead>
+            <tr>
+              <th>Invoice No.</th>
+              <th>Date</th>
+              <th>Billing Address</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {invoiceLines}
+          </tbody>
       </table>
     </>
   );

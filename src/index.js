@@ -18,6 +18,7 @@ import CustomersContainer from './CustomersContainer';
 import CustomerContainer from './CustomerContainer';
 import EmployeesContainer from './EmployeesContainer';
 import GenresContainer from './GenresContainer';
+import InvoiceContainer from './InvoiceContainer';
 import MediaTypesContainer from './MediaTypesContainer';
 import PlaylistsContainer from './PlaylistsContainer';
 import TracksContainer from './TracksContainer';
@@ -66,6 +67,10 @@ ReactDOM.render(
           <Route path={"/customer/:customerId"}>
             <CustomerContainer />
           </Route>
+          <Route path={"/invoice/:invoiceId"}>
+            <InvoiceContainer />
+          </Route>
+            
           <Route path="/employees">
             <EmployeesContainer />
           </Route>

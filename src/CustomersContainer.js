@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom';
 
 const GET_CUSTOMERS = gql`
 {
@@ -22,7 +23,12 @@ const CustomersContainer = () => (
 );
 
 const Customers = (props) => {
-  const customers = props.customers.map((l,i) => <li key={i}>{l.FirstName} {l.LastName}</li>);
+  const customers = props.customers.map((l,i) => {
+    return (
+      <li key={i}>
+        <Link to={`/customer/${l.CustomerId}`}>{l.FirstName} {l.LastName}</Link>
+      </li>
+    )});
 
   return(
     <>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom';
 
 const GET_ARTISTS = gql`
 {
@@ -21,7 +22,11 @@ const ArtistsContainer = () => (
 );
 
 const Artists = (props) => {
-  const artists = props.artists.map((l,i) => <li key={i}>{l.Name}</li>);
+  const artists = props.artists.map((l,i) => (
+    <li key={i}>
+      <Link to={`/artist/${l.ArtistId}`}>{l.Name}</Link>
+    </li>
+  ));
 
   return(
     <>

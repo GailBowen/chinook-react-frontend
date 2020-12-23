@@ -13,7 +13,9 @@ import App  from './App';
 import AlbumsContainer from './AlbumsContainer';
 import AlbumContainer from './AlbumContainer';
 import ArtistsContainer from './ArtistsContainer';
+import ArtistContainer from './ArtistContainer';
 import CustomersContainer from './CustomersContainer';
+import CustomerContainer from './CustomerContainer';
 import EmployeesContainer from './EmployeesContainer';
 import GenresContainer from './GenresContainer';
 import MediaTypesContainer from './MediaTypesContainer';
@@ -55,8 +57,14 @@ ReactDOM.render(
           <Route path="/artists">
             <ArtistsContainer />
           </Route>
+          <Route path={"/artist/:artistId"}>
+            <ArtistContainer />
+          </Route>
           <Route path="/customers">
             <CustomersContainer />
+          </Route>
+          <Route path={"/customer/:customerId"}>
+            <CustomerContainer />
           </Route>
           <Route path="/employees">
             <EmployeesContainer />

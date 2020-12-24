@@ -10,6 +10,8 @@ import { ApolloClient } from 'apollo-boost';
 import { resolvers, typeDefs } from './graphql/resolvers';
 
 import App  from './App';
+import Links from './Links';
+
 import AlbumsContainer from './AlbumsContainer';
 import AlbumContainer from './AlbumContainer';
 import ArtistsContainer from './ArtistsContainer';
@@ -17,11 +19,13 @@ import ArtistContainer from './ArtistContainer';
 import CustomersContainer from './CustomersContainer';
 import CustomerContainer from './CustomerContainer';
 import EmployeesContainer from './EmployeesContainer';
+import EmployeeContainer from './EmployeeContainer';
 import GenresContainer from './GenresContainer';
 import InvoiceContainer from './InvoiceContainer';
 import MediaTypesContainer from './MediaTypesContainer';
 import PlaylistsContainer from './PlaylistsContainer';
 import TracksContainer from './TracksContainer';
+import TrackContainer from './TrackContainer';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -43,6 +47,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
+    <Links />
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Switch>
@@ -74,6 +79,10 @@ ReactDOM.render(
           <Route path="/employees">
             <EmployeesContainer />
           </Route>
+          <Route path={"/employee/:employeeId"}>
+            <EmployeeContainer />
+          </Route>
+
           <Route path="/genres">
             <GenresContainer />
           </Route>
@@ -86,9 +95,13 @@ ReactDOM.render(
           <Route path="/tracks">
             <TracksContainer />
           </Route>
+          <Route path={"/track/:trackId"}>
+            <TrackContainer />
+          </Route>
         </Switch>
       </BrowserRouter>
     </ApolloProvider>
+    <Links />
   </React.StrictMode>,
   document.getElementById('root')
 );

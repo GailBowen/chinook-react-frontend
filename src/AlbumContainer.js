@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom';
 
 const GET_ALBUM = gql`
 query getAlbum($albumId: Int!) {
@@ -81,7 +82,7 @@ const Album = (props) => {
 
   const trackElements = tracks.map((l,i) => {
     const no = i+1;
-    return <li key={i}>{no}. {l.Name}</li>
+    return <li key={i}><Link to={`/track/${l.TrackId}`}>{no}. {l.Name}</Link></li>
   });
 
   return ( 

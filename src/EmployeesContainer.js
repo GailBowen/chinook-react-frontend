@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom';
 
 const GET_EMPLOYEES = gql`
 {
@@ -23,7 +24,8 @@ const EmployeesContainer = () => (
 );
 
 const Employees = (props) => {
-  const employees = props.employees.map((l,i) => <li key={i}>{l.Title} {l.FirstName} {l.LastName}</li>);
+  const employees = props.employees.map((l,i) => (
+    <li key={i}><Link to={`/employee/${l.EmployeeId}`}>{l.Title} {l.FirstName} {l.LastName}</Link></li>));
 
   return(
     <>

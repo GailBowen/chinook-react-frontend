@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import { Link } from 'react-router-dom';
 
 const GET_TRACKS = gql`
 {
@@ -21,7 +22,12 @@ const TracksContainer = () => (
 );
 
 const Tracks = (props) => {
-  const tracks = props.tracks.map((l,i) => <li key={i}>{l.Name}</li>);
+  const tracks = props.tracks.map((l,i) => (
+    <>
+      <li key={i}>
+        <Link to={`/track/${l.TrackId}`}>{l.Name}</Link>
+      </li>
+    </>));
 
   return(
     <>

@@ -80,7 +80,9 @@ const InvoiceLine = (props) => {
   return (
     <>
     <tr>
-      <td>{line.TrackId}</td>
+      <td>
+        <Link to={`/track/${line.TrackId}`}>{line.TrackId}</Link>
+      </td>
       <td>{line.TrackName}</td>
       <td>{line.UnitPrice}</td>
       <td>{line.Quantity}</td>

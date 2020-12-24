@@ -8,7 +8,6 @@ import KeyValue from './KeyValue';
 const QUERY = gql`
   query getCustomer($customerId: Int!) {
     getCustomer(customerId: $customerId) {
-      CustomerId
       FirstName
       LastName
       Company
@@ -21,6 +20,8 @@ const QUERY = gql`
       Fax
       Email
       SupportRepId
+      SupportRepFirstName
+      SupportRepLastName
     }
     getInvoiceByCustomer(customerId: $customerId) {
       InvoiceId
@@ -55,6 +56,7 @@ const Customer = (props) => {
   let invoices = props.invoices;
 
   let customerName = `${customer.FirstName} ${customer.LastName}`;
+  let supportRepLink = <Link to={`/employee/${customer.SupportRepId}`}>{customer.SupportRepFirstName} {customer.SupportRepLastName}</Link>
 
   return (
     <>
@@ -67,7 +69,7 @@ const Customer = (props) => {
       <KeyValue label="State" value={customer.State} />
       <KeyValue label="Postal Code" value={customer.PostalCode} />
       <KeyValue label="Country" value={customer.Country} />
-      <KeyValue label="Support Rep" value="TODO" />
+      <KeyValue label="Support Rep" value={supportRepLink} />
 
       <h2>Invoices</h2>
       <Invoices invoices={invoices} />

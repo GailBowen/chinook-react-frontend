@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './App.css';
 
@@ -24,7 +25,8 @@ const GenresContainer = () => (
 );
 
 const Genres = (props) => {
-  const genres = props.genres.map((l,i) => <li key={i}>{l.Name}</li>);
+  const genres = props.genres.map((l) => 
+    <li key={l.GenreId}><Link to={`/genre/${l.GenreId}`}>{l.Name}</Link></li>);
 
   const history = useHistory();
 

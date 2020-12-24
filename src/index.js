@@ -21,6 +21,7 @@ import CustomerContainer from './CustomerContainer';
 import EmployeesContainer from './EmployeesContainer';
 import EmployeeContainer from './EmployeeContainer';
 import GenresContainer from './GenresContainer';
+import GenreContainer from './GenreContainer';
 import InvoiceContainer from './InvoiceContainer';
 import MediaTypesContainer from './MediaTypesContainer';
 import PlaylistsContainer from './PlaylistsContainer';
@@ -86,6 +87,10 @@ ReactDOM.render(
           <Route path="/genres">
             <GenresContainer />
           </Route>
+          <Route path={"/genre/:genreId"}>
+            <GenreContainer />
+          </Route>
+
           <Route path="/mediatypes">
             <MediaTypesContainer />
           </Route>

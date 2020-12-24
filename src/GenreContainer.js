@@ -24,10 +24,13 @@ const MUTATION = gql`
 `;
 
 const GenreContainer = () => {
-  let { genreId } = useParams();
-  genreId = parseInt(genreId);
+  let pGenreId = useParams().genreId;
+  pGenreId = parseInt(pGenreId);
+
+  const history = useHistory();
 
   const [genreName, setGenreName] = useState('');
+  const [genreId, setGenreId] = useState(pGenreId);
 
   const [setGenre, { mData }] = useMutation(MUTATION);
 
@@ -53,7 +56,14 @@ const GenreContainer = () => {
           genreId: genreId,
           genreName: genreName
         }
-      });
+      })
+    .then((result) => {
+      const r = result.data.setGenre;
+      setGenreName(r.Name);
+      setGenreId(r.GenreId);
+      history.push('/genres');
+    });
+    
   };
 
   if (!genreName) {
@@ -64,6 +74,7 @@ const GenreContainer = () => {
     <>
       <div className="page">
         <form>
+          <span>Genre Id: </span><span>{genreId}</span><br />
           <input type="text" onChange={handleNameChange} defaultValue={genreName} /> 
           <div>
             <input type="submit" value="Save" onClick={handleSubmit} />

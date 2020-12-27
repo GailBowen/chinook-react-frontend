@@ -14,8 +14,8 @@ const QUERY = gql`
   }
 `;
 
-const MUTATION = gql`
-  mutation getGenre($genreId: Int, $genreName: String!) {
+const UpdateMutation = gql`
+  mutation setGenre($genreId: Int, $genreName: String!) {
     setGenre(genreId: $genreId, genreName: $genreName) {
       GenreId
       Name
@@ -23,63 +23,99 @@ const MUTATION = gql`
   }
 `;
 
+const InsertMutation = gql`
+  mutation addGenre($genreName: String!) {
+    addGenre(genreName: $genreName) {
+      GenreId
+      Name
+    }
+  }
+`;
+
 const GenreContainer = () => {
-  let pGenreId = useParams().genreId;
-  pGenreId = parseInt(pGenreId);
+  let genreId = useParams().genreId;
+  genreId = parseInt(genreId);
 
   const history = useHistory();
 
-  const [genreName, setGenreName] = useState('');
-  const [genreId, setGenreId] = useState(pGenreId);
+  const initData = {
+    GenreId: -1,
+    Name: ''
+  };
 
-  const [setGenre, { mData }] = useMutation(MUTATION);
+  const [genre, setGenre] = useState(initData);
+  const [editGenre] = useMutation(UpdateMutation);
+  const [insertGenre] = useMutation(InsertMutation);
 
   let { loading, error, data } = useQuery(QUERY, {
     variables: { genreId }
   });
 
   if (error) {
-    throw(error);
+    if (genreId) {
+      throw(error);
+    }
   }
 
   if (loading) {
     return null;
   }
 
-  const genre = data.getGenre;
+  if (genreId && genre.GenreId<0) {
+    setGenre({
+      GenreId: genreId,
+      Name: data.getGenre.Name
+    });
+  }
 
   const handleNameChange = (e) => {
-    setGenreName(e.target.value);
+    setGenre(p => ({
+      GenreId: p.GenreId,
+      Name: e.target.value
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setGenre(
+  const updateGenre = () => {
+    editGenre(
       { 
         variables: {
-          genreId: genreId,
-          genreName: genreName
+          genreId: genre.GenreId,
+          genreName: genre.Name
         }
       })
     .then((result) => {
-      const r = result.data.setGenre;
-      setGenreName(r.Name);
-      setGenreId(r.GenreId);
       history.push('/genres');
     });
-    
-  };
-
-  if (!genreName) {
-    setGenreName(genre.Name);
   }
+
+  const addGenre = () => {
+    insertGenre(
+      { 
+        variables: {
+          genreName: genre.Name,
+        }
+      })
+    .then((result) => {
+      history.push('/genres');
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (genre.GenreId>-1) {
+      updateGenre();
+    } else {
+      addGenre();
+    }
+  };
 
   return(
     <>
       <div className="page">
         <form>
-          <span>Genre Id: </span><span>{genreId}</span><br />
-          <input type="text" onChange={handleNameChange} defaultValue={genreName} /> 
+          {genreId ? <><span>Genre Id: </span><span>{genre.GenreId}</span><br /></> : <span></span>}
+          <span>Name</span>
+          <input type="text" onChange={handleNameChange} defaultValue={genre.Name} /> 
           <div>
             <input type="submit" value="Save" onClick={handleSubmit} />
           </div>

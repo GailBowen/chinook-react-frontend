@@ -87,6 +87,9 @@ ReactDOM.render(
           <Route path="/genres">
             <GenresContainer />
           </Route>
+          <Route path={"/addgenre"}>
+            <GenreContainer />
+          </Route>
           <Route path={"/genre/:genreId"}>
             <GenreContainer />
           </Route>

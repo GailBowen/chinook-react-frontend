@@ -1,5 +1,5 @@
 import React from 'react';
-import { Query, useQuery } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
@@ -23,6 +23,10 @@ const ArtistContainer = () => {
   let { loading, error, data } = useQuery(QUERY, {
     variables: { artistId }
   });
+
+  if (error) {
+    throw(error);
+  }
 
   if (loading) {
     return "Loading";

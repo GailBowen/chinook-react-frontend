@@ -1,5 +1,5 @@
 import React from 'react';
-import { Query, useQuery } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
@@ -40,6 +40,10 @@ const CustomerContainer = () => {
     variables: { customerId }
   });
 
+  if (error) {
+    throw(error);
+  }
+    
   if (loading) {
     return "Loading";
   }

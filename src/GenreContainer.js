@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { useHistory } from 'react-router-dom';
@@ -37,6 +37,10 @@ const GenreContainer = () => {
   let { loading, error, data } = useQuery(QUERY, {
     variables: { genreId }
   });
+
+  if (error) {
+    throw(error);
+  }
 
   if (loading) {
     return null;

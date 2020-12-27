@@ -27,9 +27,6 @@ query getArtist($artistId: Int!) {
 }
 `;
 
-const getAlbum = () => {
-}
-
 const AlbumContainer = () => { 
   let { albumId } = useParams();
   albumId = parseInt(albumId);
@@ -46,8 +43,11 @@ const AlbumContainer = () => {
       variables: { albumId }
     });
 
-
     albumLoading = loading;
+
+    if (error) {
+      throw(error);
+    }
 
     if (!albumLoading) {
       album = data.getAlbum;
@@ -63,6 +63,11 @@ const AlbumContainer = () => {
     });
 
     artistLoading = loading;
+
+    if (error) {
+      throw(error);
+    }
+
 
     if (!albumLoading && !artistLoading) {
       artist = data.getArtist;

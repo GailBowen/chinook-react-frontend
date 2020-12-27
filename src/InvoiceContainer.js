@@ -34,6 +34,10 @@ const InvoiceContainer = () => {
     variables: { invoiceId }
   });
 
+  if (error) {
+    throw(error);
+  }
+
   if (loading) {
     return "loading";
   }

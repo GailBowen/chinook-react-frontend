@@ -1,7 +1,5 @@
 import './App.css';
 
-import AlbumsContainer from './AlbumsContainer.js';
-
 function App() {
   return (
     <div className="App">

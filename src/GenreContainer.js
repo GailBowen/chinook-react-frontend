@@ -4,6 +4,8 @@ import { gql } from 'apollo-boost';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
+import DeleteButton from './components/DeleteButton';
+
 import './App.css';
 
 const QUERY = gql`
@@ -20,6 +22,13 @@ const UpdateMutation = gql`
       GenreId
       Name
     }
+  }
+`;
+
+const DeleteMutation = gql`
+  mutation deleteGenre($genreId: Int!) {
+    deleteGenre(genreId: $genreId) 
+    
   }
 `;
 
@@ -46,6 +55,7 @@ const GenreContainer = () => {
   const [genre, setGenre] = useState(initData);
   const [editGenre] = useMutation(UpdateMutation);
   const [insertGenre] = useMutation(InsertMutation);
+  const [deleteGenre] = useMutation(DeleteMutation);
 
   let { loading, error, data } = useQuery(QUERY, {
     variables: { genreId }
@@ -109,16 +119,35 @@ const GenreContainer = () => {
     }
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    deleteGenre({
+      variables: {
+        genreId: genre.GenreId
+      }
+    })
+      .then((result) => {
+        history.push('/genres');
+      });
+  }
+
   return(
     <>
       <div className="page">
         <form>
-          {genreId ? <><span>Genre Id: </span><span>{genre.GenreId}</span><br /></> : <span></span>}
+          {genreId ? 
+            <>
+              <span>Genre Id: </span><span>{genre.GenreId}</span><br />
+            </> : 
+            <span></span>}
           <span>Name</span>
           <input type="text" onChange={handleNameChange} defaultValue={genre.Name} /> 
           <div>
             <input type="submit" value="Save" onClick={handleSubmit} />
           </div>
+          {genreId ?
+            <DeleteButton handleDelete={handleDelete} /> :
+            <div></div>}
         </form>
       </div>
     </>

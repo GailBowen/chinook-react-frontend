@@ -92,12 +92,14 @@ const Album = (props) => {
 
   return ( 
     <>
-    <h1>Album</h1>
-    <span>{album.Title} by {artist.Name}</span>
-    <h2>Tracks</h2>
-    <ul>
-      {trackElements}
-    </ul>
+      <div className="page">
+        <h1>Album</h1>
+        <span>{album.Title} by {artist.Name}</span>
+        <h2>Tracks</h2>
+        <ul>
+          {trackElements}
+        </ul>
+      </div>
     </>
   );
 }

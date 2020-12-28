@@ -1,19 +1,37 @@
+import { Link } from 'react-router-dom';
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <ul>
-        <li><a href="/albums">Albums List</a></li>
-        <li><a href="/artists">Artists List</a></li>
-        <li><a href="/customers">Customers List</a></li>
-        <li><a href="/employees">Employees List</a></li>
-        <li><a href="/genres">Genres List</a></li>
-        <li><a href="/mediatypes">Media Types List</a></li>
-        <li><a href="/playlists">Playlists List</a></li>
-        <li><a href="/tracks">Tracks List</a></li>
-      </ul>
+      <h1>Chinook</h1>
+      <div className="dashboard">
+        <div className="dashboard-row">
+          <DashboardTile url="/albums" caption="Albums" />
+          <DashboardTile url="/artists" caption="Artists" />
+          <DashboardTile url="/customers" caption="Customers" />
+          <DashboardTile url="/employees" caption="Employees" />
+          <DashboardTile url="/genres" caption="Genres" />
+          <DashboardTile url="/mediatypes" caption="Media Types" />
+          <DashboardTile url="/playlists" caption="Playlists" />
+          <DashboardTile url="/tracks" caption="Tracks" />
+        </div>
+      </div>
     </div>
+  );
+}
+
+function DashboardTile(props) {
+  const url = props.url;
+  const caption = props.caption;
+
+  return (
+    <>
+    <div className="dashboard-tile">
+      <Link to={url}>{caption}</Link>
+    </div>
+    </>
   );
 }
 

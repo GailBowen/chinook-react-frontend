@@ -1,3 +1,16 @@
+div.App {
+  text-align: center;
+}
+
+div.links-menu {
+  text-align: center;
+  padding: 1em;
+}
+
+div.links-menu a {
+  padding: 1em;
+}
+
 div.page {
   padding: 1em;
 }
@@ -8,5 +21,19 @@ button.link-button {
   padding: 0;
   text-decoration: underline;
   cursor: pointer;
+}
 
+div.dashboard {
+  padding: 1em;
+  margin: 1em;
+}
+
+div.dashboard-row {
+}
+
+div.dashboard-tile {
+  border: solid 1px;
+  display: inline;
+  margin: 1em;
+  padding: 1em;
 }

@@ -17,6 +17,8 @@ const QUERY = gql`
       Milliseconds
       Bytes
       UnitPrice
+      GenreId
+      GenreName
     }
   }
 `;
@@ -39,12 +41,14 @@ const TrackContainer = () => {
 
   const track = data.getTrack;
   const albumLink = <Link to={`/album/${track.AlbumId}`}>{track.AlbumTitle}</Link>;
+  const genreLink = <Link to={`/genre/${track.GenreId}`}>{track.GenreName}</Link>;
 
   return  (
     <>
       <h1>{track.Name}</h1>
       <KeyValue label="Name" value={albumLink} />
       <KeyValue label="Composer" value={track.Composer} />
+      <KeyValue label="Genre" value={genreLink} />
       <KeyValue label="Media Type" value={track.MediaTypeName} />
       <KeyValue label="Length (ms)" value={track.Milliseconds} />
       <KeyValue label="Size (bytes)" value={track.Bytes} />

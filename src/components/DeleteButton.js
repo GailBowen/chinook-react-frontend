@@ -17,7 +17,7 @@ const DeleteButton = (props) => {
       </div>
       {showConfirm && <div className="confirmDelete">
         <span>To confirm deletetion, </span>
-        <button className="linkButton" onClick={handleDelete}>Click here</button>
+        <button className="link-button" onClick={handleDelete}>Click here</button>
       </div>}
     </>
   );

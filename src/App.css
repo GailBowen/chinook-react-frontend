@@ -1,3 +1,12 @@
 div.page {
   padding: 1em;
 }
+
+button.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+}

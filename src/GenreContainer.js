@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import DeleteButton from './components/DeleteButton';
+import KeyValue from './components/KeyValue';
 
 import './App.css';
 
@@ -56,6 +57,8 @@ const GenreContainer = () => {
   const [editGenre] = useMutation(UpdateMutation);
   const [insertGenre] = useMutation(InsertMutation);
   const [deleteGenre] = useMutation(DeleteMutation);
+
+  const pageTitle = genreId ? 'Edit Genre' : 'Add Genre';
 
   let { loading, error, data } = useQuery(QUERY, {
     variables: { genreId }
@@ -133,23 +136,32 @@ const GenreContainer = () => {
 
   return(
     <>
-      <div className="page">
+        <h1>{pageTitle}</h1>
         <form>
-          {genreId ? 
-            <>
-              <span>Genre Id: </span><span>{genre.GenreId}</span><br />
-            </> : 
-            <span></span>}
-          <span>Name</span>
-          <input type="text" onChange={handleNameChange} defaultValue={genre.Name} /> 
-          <div>
-            <input type="submit" value="Save" onClick={handleSubmit} />
+          <div className="key-values">
+            {genreId ? 
+              <>
+                <KeyValue label="Genre Id" value={genre.GenreId} />
+              </> : 
+              <span></span>}
+            <div className="key-value-row">
+              <div className="key-value-label">
+                <span className="key-value-label">Name: </span>
+              </div>
+              <div className="key-value-value">
+                <input type="text" onChange={handleNameChange} defaultValue={genre.Name} /> 
+              </div>
+            </div>
           </div>
-          {genreId ?
-            <DeleteButton handleDelete={handleDelete} /> :
-            <div></div>}
+          <div>
+            <div className="buttons">
+              <input type="submit" value="Save" onClick={handleSubmit} />
+            </div>
+            {genreId ?
+              <DeleteButton handleDelete={handleDelete} /> :
+              <div></div>}
+          </div>
         </form>
-      </div>
     </>
   );
 }

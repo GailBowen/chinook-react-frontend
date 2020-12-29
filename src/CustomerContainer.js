@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
-import KeyValue from './KeyValue';
+import KeyValue from './components/KeyValue';
 
 const QUERY = gql`
   query getCustomer($customerId: Int!) {

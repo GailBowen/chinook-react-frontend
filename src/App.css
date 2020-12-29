@@ -22,6 +22,26 @@ div.page {
   padding: 1em;
 }
 
+div.delete-component {
+  display: inline;
+}
+
+div.delete {
+  display:inline;
+}
+
+div.buttons {
+  display: inline;
+}
+
+div.buttons input {
+  margin: 0.5em;
+}
+
+div.buttons button {
+  margin: 0.5em;
+}
+
 button.link-button {
   background: none;
   border: none;
@@ -43,4 +63,29 @@ div.dashboard-tile {
   display: inline;
   margin: 1em;
   padding: 1em;
+}
+
+div.key-value-row {
+ display:flex; 
+ padding-top: 0.5em;
+ padding-bottom: 0.5em;
+}
+
+div.key-value-value {
+  flex: 50%;
+  text-align: left;
+}
+
+div.key-value-label {
+  text-align: right;
+  flex: 50%;
+  padding-right: 2em;
+}
+
+span.key-value-label {
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
 }

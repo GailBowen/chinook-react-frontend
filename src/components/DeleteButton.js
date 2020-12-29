@@ -12,13 +12,15 @@ const DeleteButton = (props) => {
 
   return (
     <>
-      <div className="delete">
-        <button onClick={handleButton}>Delete</button>
+      <div className="delete-component">
+        <div className="delete">
+          <button onClick={handleButton}>Delete</button>
+        </div>
+        {showConfirm && <div className="confirmDelete">
+          <span>To confirm deletetion, </span>
+          <button className="link-button" onClick={handleDelete}>Click here</button>
+        </div>}
       </div>
-      {showConfirm && <div className="confirmDelete">
-        <span>To confirm deletetion, </span>
-        <button className="link-button" onClick={handleDelete}>Click here</button>
-      </div>}
     </>
   );
 };

@@ -38,20 +38,27 @@ const Genres = (props) => {
     <>
     <div className="page">
       <h1>Genres</h1>
+      <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
       <div className="list genreList">
         <ul>
           {genres}
         </ul>
       </div>
-      <div className="buttons">
-        <button onClick={handleAddGenreClick} className="add">Add Genre</button>
-      </div>
+      <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
     </div>
     </>
   );
 }
 
+const AddButton = (props) => {
+  const handleClick = props.handleClick;
+  const caption = props.caption;
+  
+  return (
+    <div className="buttons">
+      <button onClick={handleClick} className="add">{caption}</button>
+    </div>
+  );
+};
+
 export default GenresContainer;
-
-
-

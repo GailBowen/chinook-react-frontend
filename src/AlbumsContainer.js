@@ -3,6 +3,8 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
+import { ARTIST_FRAGMENT } from './graphql/queries';
+
 const GET_ALBUMS = gql`
 {
   getAlbums{
@@ -10,29 +12,54 @@ const GET_ALBUMS = gql`
     Title
     ArtistId
   }
+  getArtists{
+    ...ArtistFragment
+  }
 }
+${ARTIST_FRAGMENT}
 `;
 
 const AlbumsContainer = () => (
   <Query query={GET_ALBUMS}>
     {({loading, data}) => {
       if (loading) return 'Loading';
-      return <Albums albums={data.getAlbums} />;
+      return <Albums albums={data.getAlbums} artists={data.getArtists} />;
     }}
   </Query>
 );
 
 const Albums = (props) => {
-  const albums = props.albums.map((l,i) => (
-    <li key={i}>
-     <Link to={`/album/${l.AlbumId}`}>{l.Title}</Link>
-    </li>));
+  const artists = props.artists;
+  const albums = props.albums;
+
+  const output = artists.map((x) => {
+
+    const artistAlbums = albums.filter((a) => {
+      return a.ArtistId===x.ArtistId;
+    }).map((a) => {
+      return (
+        <>
+        <div className="album" key={a.AlbumId}><Link to={`/album/${a.AlbumId}`}>{a.Title}</Link></div>
+        </>
+      );
+    });
+
+    if (artistAlbums.length) {
+      return (
+        <>
+        <h2>{x.Name}</h2>
+        {artistAlbums}
+        </>
+      );
+    }
+    return null;
+
+    });
 
   return(
     <>
-    <ul>
-      {albums}
-    </ul>
+    <h1>Albums</h1>
+    {output}
     </>
   );
 }

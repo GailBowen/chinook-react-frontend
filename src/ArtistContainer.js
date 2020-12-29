@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
-const QUERY = gql`
+const GET_ARTISTS = gql`
 query getArtistAlbums($artistId: Int!) {
   getArtist(artistId: $artistId) {
     Name
@@ -20,7 +20,7 @@ const ArtistContainer = () => {
   let { artistId } = useParams();
   artistId = parseInt(artistId);
 
-  let { loading, error, data } = useQuery(QUERY, {
+  let { loading, error, data } = useQuery(GET_ARTISTS, {
     variables: { artistId }
   });
 
@@ -31,6 +31,7 @@ const ArtistContainer = () => {
   if (loading) {
     return "Loading";
   }
+
   return <Artist artist={data.getArtist} albums={data.getAlbumsByArtist} />
 };
 

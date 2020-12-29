@@ -1,16 +1,8 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
-const GET_ARTISTS = gql`
-{
-  getArtists{
-    ArtistId
-    Name
-  }
-}
-`;
+import { GET_ARTISTS } from './graphql/queries';
 
 const ArtistsContainer = () => (
   <Query query={GET_ARTISTS}>

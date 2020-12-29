@@ -5,6 +5,7 @@ const Links = () =>
       <div className="links-menu">
         <div className="site-title">Chinook</div>
         <a href="/">Home</a>&nbsp;
+        <a href="/artists">Artists</a>&nbsp;
         <a href="/albums">Albums</a>&nbsp;
         <a href="/customers">Customers</a>&nbsp;
         <a href="/employees">Employees</a>&nbsp;

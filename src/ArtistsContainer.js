@@ -14,17 +14,41 @@ const ArtistsContainer = () => (
 );
 
 const Artists = (props) => {
-  const artists = props.artists.map((l,i) => (
-    <li key={i}>
-      <Link to={`/artist/${l.ArtistId}`}>{l.Name}</Link>
-    </li>
-  ));
+
+  const artists = props.artists;
+  const letterA = 65;
+  const letters = [];
+
+  for (let i=0;i<26;i++) {
+    letters.push(String.fromCharCode(letterA+i));
+  }
+
+  const indexedArtists = letters.map((x) => {
+
+    const artistsForLetter = artists.filter((a) => {
+      const artistName = a.Name;
+      return artistName.startsWith(x.toLowerCase()) || artistName.startsWith(x.toUpperCase());
+    }).map((a) => {
+      return (
+        <div className="artist" key={a.ArtistId}>
+          <Link to={`/artist/{a.ArtistId}`}>{a.Name}</Link>
+        </div>);
+    });
+
+    return (
+      <>
+      <div key={x}>
+        <h2>{x}</h2>
+        {artistsForLetter}
+      </div>
+      </>
+    );
+  });
 
   return(
     <>
-    <ul>
-      {artists}
-    </ul>
+    <h1>Artists</h1>
+    {indexedArtists}
     </>
   );
 }

@@ -1,14 +1,21 @@
-div.App {
+div.page {
   text-align: center;
+}
+
+div.site-title {
+  display: inline;
+  float: left;
 }
 
 div.links-menu {
   text-align: center;
   padding: 1em;
+  background:darkgray;
 }
 
 div.links-menu a {
   padding: 1em;
+  color: white;
 }
 
 div.page {

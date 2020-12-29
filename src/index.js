@@ -49,6 +49,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <Links />
+    <div className="page">
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Switch>
@@ -109,7 +110,7 @@ ReactDOM.render(
         </Switch>
       </BrowserRouter>
     </ApolloProvider>
-    <Links />
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

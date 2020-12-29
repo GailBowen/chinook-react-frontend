@@ -3,6 +3,7 @@ const Links = () =>
   return (
     <>
       <div className="links-menu">
+        <div className="site-title">Chinook</div>
         <a href="/">Home</a>&nbsp;
         <a href="/albums">Albums</a>&nbsp;
         <a href="/customers">Customers</a>&nbsp;

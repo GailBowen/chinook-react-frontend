@@ -59,7 +59,7 @@ const Customer = (props) => {
   let customer = props.customer; 
   let invoices = props.invoices;
 
-  let customerName = `${customer.FirstName} ${customer.LastName}`;
+  let customerName = `${customer.LastName}, ${customer.LastName}`;
   let supportRepLink = <Link to={`/employee/${customer.SupportRepId}`}>{customer.SupportRepFirstName} {customer.SupportRepLastName}</Link>
 
   return (

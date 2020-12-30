@@ -31,7 +31,7 @@ const Artists = (props) => {
     }).map((a) => {
       return (
         <div className="artist" key={a.ArtistId}>
-          <Link to={`/artist/{a.ArtistId}`}>{a.Name}</Link>
+          <Link to={`/artist/${a.ArtistId}`}>{a.Name}</Link>
         </div>);
     });
 

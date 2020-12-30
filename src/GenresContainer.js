@@ -4,6 +4,8 @@ import { gql } from 'apollo-boost';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+import generateLetters from './util/GenerateLetters';
+
 import './App.css';
 
 const GET_GENRES = gql`
@@ -25,8 +27,27 @@ const GenresContainer = () => (
 );
 
 const Genres = (props) => {
-  const genres = props.genres.map((l) => 
-    <li key={l.GenreId}><Link to={`/genre/${l.GenreId}`}>{l.Name}</Link></li>);
+  const genres = props.genres;
+  const letters = generateLetters(genres.map((x) => x.Name));
+
+  const indexedGenres = letters.map((l,k) => {
+    const genresForLetter = genres.filter((g) => {
+      return g.Name.startsWith(l);
+    }).map((g,i) => {
+      return (
+        <div key={i}><Link to={`/genre/${g.GenreId}`}>{g.Name}</Link></div>
+      )})
+
+    return (
+      <>
+      <div key={k}>
+        <h2 id={l}>{l}</h2>
+        {genresForLetter}
+      </div>
+      </>
+    );
+  });
+    
 
   const history = useHistory();
 
@@ -40,9 +61,7 @@ const Genres = (props) => {
       <h1>Genres</h1>
       <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
       <div className="list genreList">
-        <ul>
-          {genres}
-        </ul>
+        {indexedGenres}
       </div>
       <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
     </div>

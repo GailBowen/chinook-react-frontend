@@ -3,37 +3,64 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
+import { ARTIST_FRAGMENT } from './graphql/queries';
+
 const GET_TRACKS = gql`
 {
   getTracks{
     TrackId
     Name
+    ArtistId
+  }
+  getArtists {
+    ...ArtistFragment
   }
 }
+${ARTIST_FRAGMENT}
 `;
 
 const TracksContainer = () => (
   <Query query={GET_TRACKS}>
     {({loading, data}) => {
       if (loading) return 'Loading';
-      return <Tracks tracks={data.getTracks} />;
+      return <Tracks tracks={data.getTracks} artists={data.getArtists} />;
     }}
   </Query>
 );
 
 const Tracks = (props) => {
-  const tracks = props.tracks.map((l,i) => (
-    <>
-      <li key={i}>
-        <Link to={`/track/${l.TrackId}`}>{l.Name}</Link>
-      </li>
-    </>));
+  const tracks = props.tracks;
+  const artists = props.artists;
+
+  const indexedTracks = artists.map((a) => {
+
+    const aTracks = tracks.filter((t) => {
+      return t.ArtistId===a.ArtistId;
+    }).map((t) => {
+      return (
+        <div className="track" key={t.TrackId}>
+          <Link to={`/track/{t.TrackId`}>{t.Name}</Link>
+        </div>
+      );
+
+    });
+
+    if (aTracks.length) {
+      return (
+        <>
+          <h2 key={a.ArtistId}>{a.Name}</h2>
+          {aTracks}
+        </>
+      );
+    }
+
+    return null;
+
+  });
 
   return(
     <>
-    <ul>
-      {tracks}
-    </ul>
+      {indexedTracks}
     </>
   );
 }

@@ -10,7 +10,7 @@ import { ApolloClient } from 'apollo-boost';
 import { resolvers, typeDefs } from './graphql/resolvers';
 
 import App  from './App';
-import Links from './Links';
+import Links from './components/Links';
 
 import AlbumsContainer from './AlbumsContainer';
 import AlbumContainer from './AlbumContainer';

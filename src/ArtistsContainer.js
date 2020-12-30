@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
+import generateLetters from './util/GenerateLetters';
 import { GET_ARTISTS } from './graphql/queries';
 
 const ArtistsContainer = () => (
@@ -16,12 +17,7 @@ const ArtistsContainer = () => (
 const Artists = (props) => {
 
   const artists = props.artists;
-  const letterA = 65;
-  const letters = [];
-
-  for (let i=0;i<26;i++) {
-    letters.push(String.fromCharCode(letterA+i));
-  }
+  const letters = generateLetters(artists.map((x) => x.Name));
 
   const indexedArtists = letters.map((x) => {
 

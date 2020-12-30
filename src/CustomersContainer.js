@@ -3,6 +3,8 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
+import generateLetters from './util/GenerateLetters';
+
 const GET_CUSTOMERS = gql`
 {
   getCustomers{
@@ -25,12 +27,7 @@ const CustomersContainer = () => (
 const Customers = (props) => {
   const customers = props.customers;
 
-  const letters = [];
-  const letterA = 65;
-
-  for (let i=0;i<26;i++) {
-    letters.push(String.fromCharCode(letterA+i));
-  }
+  const letters = generateLetters(customers.map((x) => x.LastName));
 
   const indexedCustomers = letters.map((l) => {
 

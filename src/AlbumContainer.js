@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
-import { ARTIST_FRAGMENT } from './graphql/queries';
+import { ARTIST_FRAGMENT } from './graphql/query/artist';
 
 const GET_ALBUM = gql`
 query getAlbum($albumId: Int!) {

@@ -1,18 +1,22 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { useQuery, Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
 import generateLetters from './util/GenerateLetters';
-import { GET_ARTISTS } from './graphql/queries';
+import { GET_ARTISTS } from './graphql/query/artist';
 
-const ArtistsContainer = () => (
-  <Query query={GET_ARTISTS}>
-    {({loading, data}) => {
-      if (loading) return 'Loading';
-      return <Artists artists={data.getArtists} />;
-    }}
-  </Query>
-);
+const ArtistsContainer = () => { 
+
+  let { loading, error, data } = useQuery(GET_ARTISTS, { 
+    fetchPolicy: "cache-and-network"
+  });
+
+  if (loading) {
+    return 'Loading';
+  }
+
+  return <Artists artists={data.getArtists} />;
+};
 
 const Artists = (props) => {
 

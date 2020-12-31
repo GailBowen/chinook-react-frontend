@@ -1,31 +1,21 @@
-import React from 'react';
-import { useQuery } from 'react-apollo';
-import { useParams } from 'react-router-dom';
-import { gql } from 'apollo-boost';
+import React, { useState } from 'react';
+import { useMutation, useQuery } from 'react-apollo';
+import { useHistory, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import KeyValue from './components/KeyValue';
-import { ARTIST_FRAGMENT } from './graphql/queries';
+import KeyValue, { KeyValueEditable } from './components/KeyValue';
+import EditButtons from './components/EditButtons';
 
-const GET_ARTISTS = gql`
-query getArtistAlbums($artistId: Int!) {
-  getArtist(artistId: $artistId) {
-    ...ArtistFragment
-  }
-  getAlbumsByArtist(artistId: $artistId) {
-    AlbumId
-    Title
-  }
-}
-${ARTIST_FRAGMENT}
-`;
+import { GET_ARTIST } from './graphql/query/artist';
+import { UPDATE_ARTIST } from './graphql/mutation/artist';
 
 const ArtistContainer = () => { 
   let { artistId } = useParams();
   artistId = parseInt(artistId);
 
-  let { loading, error, data } = useQuery(GET_ARTISTS, {
-    variables: { artistId }
+  let { loading, error, data } = useQuery(GET_ARTIST, {
+    variables: { artistId },
+    fetchPolicy: "cache-and-network"
   });
 
   if (error) {
@@ -40,8 +30,12 @@ const ArtistContainer = () => {
 };
 
 const Artist = (props) => {
-  const artist = props.artist;
+  const [artist, setArtist] = useState(props.artist);
   const albums = props.albums;
+
+  const history = useHistory();
+
+  const [updateArtist] = useMutation(UPDATE_ARTIST);
 
   const albumElements = albums.map((l,i) => {
     return ( 
@@ -50,6 +44,30 @@ const Artist = (props) => {
         </div> );
   });
 
+  const handleNameChange = (e) => {
+    setArtist(p => ({
+      ArtistId: p.ArtistId,
+      Name: e.target.value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateArtist({
+      variables: {
+        artistId: artist.ArtistId,
+        artistName: artist.Name
+      }
+    }).then(() => {
+      history.push('/artists');
+    });
+  };
+
+  const handleDelete = (e) => {
+  }
+
+  const canDelete = () => false;
+
   return (
   <div key={artist.ArtistId}>
     <h1>Artist</h1>
@@ -57,8 +75,9 @@ const Artist = (props) => {
     <form>
       <div className="key-values">
         <KeyValue label="Artist Id" value={artist.ArtistId} />
-        <KeyValue label="Name" value={artist.Name} />
+        <KeyValueEditable label="Name" defaultValue={artist.Name} handleChange={handleNameChange} />
       </div>
+      <EditButtons handleSubmit={handleSubmit} handleDelete={handleDelete} canDelete={canDelete} />
     </form>
 
     <h2>Albums</h2>

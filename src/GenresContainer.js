@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import generateLetters from './util/GenerateLetters';
 
-import { GET_GENRES } from './graphql/queries';
+import GET_GENRES from './graphql/query/genre';
 
 import './App.css';
 
@@ -32,7 +32,6 @@ const Genres = (props) => {
 
   const genres = data.getGenres;
   const letters = generateLetters(genres.map((x) => x.Name));
-
 
   const indexedGenres = letters.map((l,k) => {
     const genresForLetter = genres.filter((g) => {

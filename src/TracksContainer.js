@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
-import { ARTIST_FRAGMENT } from './graphql/queries';
+import { ARTIST_FRAGMENT } from './graphql/query/artist';
 
 const GET_TRACKS = gql`
 {

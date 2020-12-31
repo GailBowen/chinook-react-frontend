@@ -1,46 +1,15 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import { useHistory } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-import DeleteButton from './components/DeleteButton';
 import KeyValue, { KeyValueEditable } from './components/KeyValue';
+import EditButtons from './components/EditButtons';
+
+import { GetGenre } from './graphql/query/genre';
+import { UpdateMutation, InsertMutation, DeleteMutation } from './graphql/mutation/genre';
+
 
 import './App.css';
-
-const GetGenre = gql`
-  query getGenre($genreId: Int!) {
-    getGenre(genreId: $genreId) {
-      Name
-    }
-  }
-`;
-
-const UpdateMutation = gql`
-  mutation setGenre($genreId: Int, $genreName: String!) {
-    setGenre(genreId: $genreId, genreName: $genreName) {
-      GenreId
-      Name
-    }
-  }
-`;
-
-const DeleteMutation = gql`
-  mutation deleteGenre($genreId: Int!) {
-    deleteGenre(genreId: $genreId) 
-    
-  }
-`;
-
-const InsertMutation = gql`
-  mutation addGenre($genreName: String!) {
-    addGenre(genreName: $genreName) {
-      GenreId
-      Name
-    }
-  }
-`;
 
 const GenreContainer = () => {
   let genreId = useParams().genreId;
@@ -135,6 +104,14 @@ const GenreContainer = () => {
       });
   }
 
+  const canDelete = () => {
+    if (genreId) {
+      return true;
+    }
+
+    return false;
+  }
+
   return(
     <>
         <h1>{pageTitle}</h1>
@@ -148,14 +125,7 @@ const GenreContainer = () => {
           
             <KeyValueEditable label="Name" handleChange={handleNameChange} defaultValue={genre.Name} />
           </div>
-          <div>
-            <div className="buttons">
-              <input type="submit" value="Save" onClick={handleSubmit} />
-            </div>
-            {genreId ?
-              <DeleteButton handleDelete={handleDelete} /> :
-              <div></div>}
-          </div>
+          <EditButtons handleSubmit={handleSubmit} handleDelete={handleDelete} canDelete={canDelete} />
         </form>
     </>
   );

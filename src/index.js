@@ -89,7 +89,7 @@ ReactDOM.render(
             <GenresContainer key={Date.now().toString()} />
           </Route>
           <Route path={"/addgenre"}>
-            <GenreContainer />
+            <GenreContainer key={Date.now().toString()} />
           </Route>
           <Route path={"/genre/:genreId"}>
             <GenreContainer />

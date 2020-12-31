@@ -9,7 +9,7 @@ import KeyValue, { KeyValueEditable } from './components/KeyValue';
 
 import './App.css';
 
-const QUERY = gql`
+const GetGenre = gql`
   query getGenre($genreId: Int!) {
     getGenre(genreId: $genreId) {
       Name
@@ -60,8 +60,9 @@ const GenreContainer = () => {
 
   const pageTitle = genreId ? 'Edit Genre' : 'Add Genre';
 
-  let { loading, error, data } = useQuery(QUERY, {
-    variables: { genreId }
+  let { loading, error, data } = useQuery(GetGenre, {
+    variables: { genreId },
+    fetchPolicy: "cache-and-network"
   });
 
   if (error) {

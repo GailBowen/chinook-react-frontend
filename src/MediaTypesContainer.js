@@ -2,6 +2,8 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
+import generateLetters from './util/GenerateLetters';
+
 const GET_MEDIA_TYPES = gql`
 {
   getMediaTypes{
@@ -21,13 +23,30 @@ const MediaTypesContainer = () => (
 );
 
 const MediaTypes = (props) => {
-  const mediaTypes = props.mediaTypes.map((l,i) => <li key={i}>{l.Name}</li>);
+  const mediaTypes = props.mediaTypes;
+  const letters = generateLetters(mediaTypes.map((m) => m.Name));
+
+  const indexedMediaTypes = letters.map((l) => {
+
+    const ms = mediaTypes.filter((mt) => mt.Name.startsWith(l)).map((mt) => {
+      return (
+        <div>{mt.Name}</div>
+      );
+    });
+
+    return (
+      <>
+      <h2>{l}</h2>
+      {ms}
+      </>
+    );
+
+  });
 
   return(
     <>
-    <ul>
-      {mediaTypes}
-    </ul>
+    <h1>Media Types</h1>
+    {indexedMediaTypes}
     </>
   );
 }

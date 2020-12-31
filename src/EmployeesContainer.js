@@ -32,21 +32,23 @@ const Employees = (props) => {
   const indexedEmployees = letters.map((l) => {
 
     const es = employees.filter((e) => e.LastName.startsWith(l)).map((e) =>
-      <div><Link to={`/employee/${e.EmployeeId}`}>{e.LastName}, {e.FirstName} ({e.Title})</Link></div>
+      <div key={e.EmployeeId}>
+        <Link to={`/employee/${e.EmployeeId}`}>{e.LastName}, {e.FirstName} ({e.Title})</Link>
+      </div>
     );
 
     return (
-      <>
-      <h2 id={`letter-${l}`}>{l}</h2>
-      {es}
-      </>);
+      <div key={l}>
+        <h2 id={`letter-${l}`}>{l}</h2>
+        {es}
+      </div>);
   });
 
   return(
-    <>
-    <h1>Employees</h1>
-    {indexedEmployees}
-    </>
+    <div key="employees">
+      <h1>Employees</h1>
+      {indexedEmployees}
+    </div>
   );
 }
 

@@ -38,18 +38,18 @@ const Albums = (props) => {
       return a.ArtistId===x.ArtistId;
     }).map((a) => {
       return (
-        <>
-        <div className="album" key={a.AlbumId}><Link to={`/album/${a.AlbumId}`}>{a.Title}</Link></div>
-        </>
+        <div key={a.AlbumId}>
+          <div className="album" key={a.AlbumId}><Link to={`/album/${a.AlbumId}`}>{a.Title}</Link></div>
+        </div>
       );
     });
 
     if (artistAlbums.length) {
       return (
-        <>
-        <h2>{x.Name}</h2>
-        {artistAlbums}
-        </>
+        <div key={x.ArtistId}>
+          <h2>{x.Name}</h2>
+          {artistAlbums}
+        </div>
       );
     }
     return null;
@@ -57,10 +57,10 @@ const Albums = (props) => {
     });
 
   return(
-    <>
+    <div key="albums">
     <h1>Albums</h1>
     {output}
-    </>
+    </div>
   );
 }
 

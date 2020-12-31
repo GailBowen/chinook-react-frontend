@@ -38,19 +38,19 @@ const ArtistContainer = () => {
 const Artist = (props) => {
   const albumElements = props.albums.map((l,i) => {
     return ( 
-      
         <li key={l.AlbumId}>
           <Link to={`/album/${l.AlbumId}`}>{l.Title}</Link>
         </li> );
   });
+
   return (
-  <>
-  <h1>Artist: {props.artist.Name}</h1>
-  <h2>Albums</h2>
-  <ul>
-    {albumElements}
-  </ul>
-  </>
+  <div key={props.artist.ArtistId}>
+    <h1>Artist: {props.artist.Name}</h1>
+    <h2>Albums</h2>
+    <ul>
+      {albumElements}
+    </ul>
+  </div>
   );
 
 };

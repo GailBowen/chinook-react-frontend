@@ -30,24 +30,24 @@ const MediaTypes = (props) => {
 
     const ms = mediaTypes.filter((mt) => mt.Name.startsWith(l)).map((mt) => {
       return (
-        <div>{mt.Name}</div>
+        <div key={mt.MediaTypeId}>{mt.Name}</div>
       );
     });
 
     return (
-      <>
-      <h2>{l}</h2>
-      {ms}
-      </>
+      <div key={l}>
+        <h2>{l}</h2>
+        {ms}
+      </div>
     );
 
   });
 
   return(
-    <>
-    <h1>Media Types</h1>
-    {indexedMediaTypes}
-    </>
+    <div key="mediatypes">
+      <h1>Media Types</h1>
+      {indexedMediaTypes}
+    </div>
   );
 }
 

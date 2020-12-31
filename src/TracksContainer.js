@@ -39,7 +39,7 @@ const Tracks = (props) => {
     }).map((t) => {
       return (
         <div className="track" key={t.TrackId}>
-          <Link to={`/track/{t.TrackId`}>{t.Name}</Link>
+          <Link to={`/track/${t.TrackId}`}>{t.Name}</Link>
         </div>
       );
 
@@ -47,10 +47,10 @@ const Tracks = (props) => {
 
     if (aTracks.length) {
       return (
-        <>
+        <div key={a.ArtistId}>
           <h2 key={a.ArtistId}>{a.Name}</h2>
           {aTracks}
-        </>
+        </div>
       );
     }
 
@@ -59,9 +59,10 @@ const Tracks = (props) => {
   });
 
   return(
-    <>
+    <div key="tracks">
+      <h1>Tracks</h1>
       {indexedTracks}
-    </>
+    </div>
   );
 }
 

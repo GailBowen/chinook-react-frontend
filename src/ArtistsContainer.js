@@ -32,20 +32,18 @@ const Artists = (props) => {
     });
 
     return (
-      <>
       <div key={x}>
         <h2>{x}</h2>
         {artistsForLetter}
       </div>
-      </>
     );
   });
 
   return(
-    <>
+    <div key="artists">
     <h1>Artists</h1>
     {indexedArtists}
-    </>
+    </div>
   );
 }
 

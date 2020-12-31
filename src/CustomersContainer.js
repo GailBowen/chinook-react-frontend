@@ -43,10 +43,10 @@ const Customers = (props) => {
 
     if (letterCustomers.length) {
       return (
-        <>
+        <div key={l}>
           <h2>{l}</h2>
           {letterCustomers}
-        </>
+        </div>
       );
     }
 
@@ -54,10 +54,10 @@ const Customers = (props) => {
   });
 
   return(
-    <>
+    <div key="customers">
       <h1>Customers</h1>
       {indexedCustomers}
-    </>
+    </div>
   );
 }
 

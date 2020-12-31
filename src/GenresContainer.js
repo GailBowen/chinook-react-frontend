@@ -39,12 +39,10 @@ const Genres = (props) => {
       )})
 
     return (
-      <>
       <div key={k}>
         <h2 id={l}>{l}</h2>
         {genresForLetter}
       </div>
-      </>
     );
   });
     
@@ -56,8 +54,7 @@ const Genres = (props) => {
   };
 
   return(
-    <>
-    <div className="page">
+    <div key="genres" className="page">
       <h1>Genres</h1>
       <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
       <div className="list genreList">
@@ -65,7 +62,6 @@ const Genres = (props) => {
       </div>
       <AddButton handleClick={handleAddGenreClick} caption="Add Genre" />
     </div>
-    </>
   );
 }
 

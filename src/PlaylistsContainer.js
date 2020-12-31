@@ -2,6 +2,8 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
+import generateLetters from './util/GenerateLetters';
+
 const GET_PLAYLISTS = gql`
 {
   getPlaylists{
@@ -21,20 +23,35 @@ const PlaylistsContainer = () => (
 );
 
 const Playlists = (props) => {
-  const playlists = props.playlists.map((l,i) => <li key={i}>{l.Name}</li>);
+  const playlists = props.playlists;
+  const letters = generateLetters(playlists.map((p) => p.Name));
+
+  const indexedPlaylists = letters.map((l) => {
+
+    const pls = playlists.filter((p) => {
+      return p.Name.startsWith(l);
+    }).map((p) => {
+      return (
+        <div key={p.PlaylistId}>
+          <span>{p.Name}</span>
+        </div>
+      );
+    });
+
+    return (
+      <div key={l}>
+        <h2 className={`letter-${l}`}>{l}</h2>
+        {pls}
+      </div>
+    );
+  });
 
   return(
-    <>
-    <ul>
-      {playlists}
-    </ul>
-    </>
+    <div key="playlists">
+      <h1>Playlists</h1>
+      {indexedPlaylists}
+    </div>
   );
 }
 
 export default PlaylistsContainer;
-
-
-
-
-

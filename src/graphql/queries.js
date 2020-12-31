@@ -18,14 +18,6 @@ export const GET_ARTISTS = gql`
 ${ARTIST_FRAGMENT}
 `;
 
-export const GET_GENRES = gql`
-query getGenres{
-  getGenres{
-    GenreId
-    Name
-  }
-}
-`;
 
 export default queries;
 

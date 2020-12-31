@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import DeleteButton from './components/DeleteButton';
-import KeyValue from './components/KeyValue';
+import KeyValue, { KeyValueEditable } from './components/KeyValue';
 
 import './App.css';
 
@@ -94,7 +94,7 @@ const GenreContainer = () => {
         variables: {
           genreId: genre.GenreId,
           genreName: genre.Name
-        }
+        },
       })
     .then((result) => {
       history.push('/genres');
@@ -144,14 +144,8 @@ const GenreContainer = () => {
                 <KeyValue label="Genre Id" value={genre.GenreId} />
               </> : 
               <span></span>}
-            <div className="key-value-row">
-              <div className="key-value-label">
-                <span className="key-value-label">Name: </span>
-              </div>
-              <div className="key-value-value">
-                <input type="text" onChange={handleNameChange} defaultValue={genre.Name} /> 
-              </div>
-            </div>
+          
+            <KeyValueEditable label="Name" handleChange={handleNameChange} defaultValue={genre.Name} />
           </div>
           <div>
             <div className="buttons">

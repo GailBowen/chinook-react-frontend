@@ -1,34 +1,38 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
+import { useQuery } from 'react-apollo';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import generateLetters from './util/GenerateLetters';
 
+import { GET_GENRES } from './graphql/queries';
+
 import './App.css';
 
-const GET_GENRES = gql`
-{
-  getGenres{
-    GenreId
-    Name
-  }
-}
-`;
+const GenresContainer = (props) => {
 
-const GenresContainer = () => (
-  <Query query={GET_GENRES}>
-    {({loading, data}) => {
-      if (loading) return 'Loading';
-      return <Genres genres={data.getGenres} />;
-    }}
-  </Query>
-);
+  return <Genres key={Date.now().toString()} />;
+};
 
 const Genres = (props) => {
-  const genres = props.genres;
+
+  let { loading, error, data } = useQuery(GET_GENRES, { 
+    fetchPolicy: "cache-and-network"
+  });
+
+  const history = useHistory();
+
+  if (loading) {
+    return 'Loading';
+  }
+
+  if (error) {
+    throw(error);
+  }
+
+  const genres = data.getGenres;
   const letters = generateLetters(genres.map((x) => x.Name));
+
 
   const indexedGenres = letters.map((l,k) => {
     const genresForLetter = genres.filter((g) => {
@@ -45,9 +49,6 @@ const Genres = (props) => {
       </div>
     );
   });
-    
-
-  const history = useHistory();
 
   const handleAddGenreClick = () => {
     history.push('/addGenre');

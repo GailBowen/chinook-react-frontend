@@ -1,111 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
 
-import { ARTIST_FRAGMENT } from './graphql/query/artist';
-
-const GET_ALBUM = gql`
-query getAlbum($albumId: Int!) {
-  getAlbum(albumId: $albumId) {
-    AlbumId
-    Title
-    ArtistId
-    ArtistName
-  }
-  getTracksByAlbum(albumId: $albumId) {
-    TrackId
-    Name
-  }
-  getArtists {
-    ...ArtistFragment
-  }
-}
-${ARTIST_FRAGMENT}
-`;
-
-const GET_ARTISTS = gql`
-query getArtist($artistId: Int!) {
-  getArtist(artistId: $artistId) {
-    ...ArtistFragment
-  }
-}
-${ARTIST_FRAGMENT}
-`;
+import { GET_ALBUM } from './graphql/query/album';
 
 const AlbumContainer = () => { 
   let { albumId } = useParams();
   albumId = parseInt(albumId);
 
-  let album = null;
-  let artist = null;
-  let tracks = [];
+  const initAlbumData = {
+    AlbumId: -1,
+    Name: '',
+    ArtistId: -1,
+    ArtistName: '',
+  };
 
-  let albumLoading = false;
-  let artistLoading = false;
+  const [album, setAlbum] = useState(initAlbumData);
+  const [tracks, setTracks] = useState([]);
 
-  {
-    let { loading, error, data } = useQuery(GET_ALBUM, {
-      variables: { albumId }
-    });
+  let { loading, error, data } = useQuery(GET_ALBUM, {
+    variables: { albumId }
+  });
 
-    albumLoading = loading;
+  useEffect(() => {
+    if (data) {
+      if (data.getAlbum) {
+        setAlbum(data.getAlbum);
+      }
 
-    if (error) {
-      throw(error);
+      if (data.getTracksByAlbum) {
+        setTracks(data.getTracksByAlbum);
+      }
     }
+  }, [data])
 
-    if (!albumLoading) {
-      album = data.getAlbum;
-      tracks = data.getTracksByAlbum;
-    }
+
+  if (error) {
+    throw(error);
   }
 
-  {
-    const artistId = album ? album.ArtistId : null;
-    let { loading, error, data } = useQuery(GET_ARTISTS, {
-      variables: { artistId },
-      skip: albumLoading
-    });
+  if (loading) return 'Loading';
 
-    artistLoading = loading;
-
-    if (error) {
-      throw(error);
-    }
-
-
-    if (!albumLoading && !artistLoading) {
-      artist = data.getArtist;
-    }
-  }
-
-  if (albumLoading || artistLoading) return 'Loading';
-
-  return <Album album={album} artist={artist} tracks={tracks} />
-
+  return <Album album={album} tracks={tracks} />
 };
 
 const Album = (props) => {
   const album = props.album;
-  const artist = props.artist;
   const tracks = props.tracks;
 
   const trackElements = tracks.map((l,i) => {
     const no = i+1;
-    return <li key={i}><Link to={`/track/${l.TrackId}`}>{no}. {l.Name}</Link></li>
+    return <div key={i}><Link to={`/track/${l.TrackId}`}>{no}. {l.Name}</Link></div>
   });
 
   return ( 
     <>
       <div className="page">
         <h1>Album</h1>
-        <span>{album.Title} by {artist.Name}</span>
+        <span>{album.Title} by {album.ArtistName}</span>
         <h2>Tracks</h2>
-        <ul>
-          {trackElements}
-        </ul>
+        {trackElements}
       </div>
     </>
   );

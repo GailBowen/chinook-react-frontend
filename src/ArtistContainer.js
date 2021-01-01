@@ -7,7 +7,7 @@ import KeyValue, { KeyValueEditable } from './components/KeyValue';
 import EditButtons from './components/EditButtons';
 
 import { GET_ARTIST } from './graphql/query/artist';
-import { UPDATE_ARTIST } from './graphql/mutation/artist';
+import { UPDATE_ARTIST, ADD_ARTIST, DELETE_ARTIST } from './graphql/mutation/artist';
 
 const ArtistContainer = () => { 
   let { artistId } = useParams();
@@ -24,6 +24,8 @@ const ArtistContainer = () => {
   const history = useHistory();
 
   const [updateArtist] = useMutation(UPDATE_ARTIST);
+  const [addArtist] = useMutation(ADD_ARTIST);
+  const [deleteArtist] = useMutation(DELETE_ARTIST);
 
   let { loading, error, data } = useQuery(GET_ARTIST, {
     variables: { artistId },
@@ -66,8 +68,7 @@ const ArtistContainer = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleUpdateArtist = () => {
     updateArtist({
       variables: {
         artistId: artist.ArtistId,
@@ -78,10 +79,38 @@ const ArtistContainer = () => {
     });
   };
 
+  const handleInsertArtist = () => {
+    addArtist({
+      variables: {
+        artistName: artist.Name,
+      }
+    }).then(() => {
+      history.push('/artists');
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (artist.ArtistId>-1) {
+      handleUpdateArtist();
+    } else {
+      handleInsertArtist();
+    }
+  };
+
   const handleDelete = (e) => {
+    e.preventDefault();
+
+    deleteArtist({
+      variables: {
+        artistId: artist.ArtistId
+      }
+    }).then(() => {
+      history.push('/artists');
+    });
   }
 
-  const canDelete = () => false;
+  const canDelete = () => artist.ArtistId > -1;
 
   return (
   <div key={artist.ArtistId}>

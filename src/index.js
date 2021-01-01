@@ -56,10 +56,14 @@ ReactDOM.render(
           <Route exact path="/">
             <App />
           </Route>
+
           <Route path="/albums">
             <AlbumsContainer />
           </Route>
           <Route path={"/album/:albumId"}>
+            <AlbumContainer />
+          </Route>
+          <Route path="/addalbum">
             <AlbumContainer />
           </Route>
 

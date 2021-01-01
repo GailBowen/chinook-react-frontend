@@ -4,22 +4,38 @@ import { ARTIST_FRAGMENT } from './artist';
 
 const a = [];
 
+const ALBUM_FRAGMENT = gql`
+fragment AlbumFragment on Album {
+  AlbumId
+  Title
+  ArtistId
+}
+`;
+
 export const GET_ALBUM = gql`
 query getAlbum($albumId: Int!) {
   getAlbum(albumId: $albumId) {
-    AlbumId
-    Title
-    ArtistId
+    ...AlbumFragment
     ArtistName
   }
   getTracksByAlbum(albumId: $albumId) {
     TrackId
     Name
   }
-  getArtists {
+}
+${ALBUM_FRAGMENT}
+`;
+
+export const GET_ALBUMS = gql`
+{
+  getAlbums{
+    ...AlbumFragment
+  }
+  getArtists{
     ...ArtistFragment
   }
 }
+${ALBUM_FRAGMENT}
 ${ARTIST_FRAGMENT}
 `;
 

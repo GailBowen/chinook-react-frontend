@@ -1,36 +1,32 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import { Link } from 'react-router-dom';
+import { useQuery } from 'react-apollo';
+import { Link, useHistory } from 'react-router-dom';
 
-import { ARTIST_FRAGMENT } from './graphql/query/artist';
+import { GET_ALBUMS } from './graphql/query/album';
 
-const GET_ALBUMS = gql`
-{
-  getAlbums{
-    AlbumId
-    Title
-    ArtistId
+import AddButton from './components/AddButton';
+
+const AlbumsContainer = () => {
+  const { loading, error, data } = useQuery(GET_ALBUMS, {
+    fetchPolicy: "cache-and-network"
+  });
+
+  if (error) {
+    throw(error);
   }
-  getArtists{
-    ...ArtistFragment
-  }
-}
-${ARTIST_FRAGMENT}
-`;
 
-const AlbumsContainer = () => (
-  <Query query={GET_ALBUMS}>
-    {({loading, data}) => {
-      if (loading) return 'Loading';
-      return <Albums albums={data.getAlbums} artists={data.getArtists} />;
-    }}
-  </Query>
-);
+  if (loading) {
+    return 'Loading';
+  }
+
+  return <Albums albums={data.getAlbums} artists={data.getArtists} />;
+};
 
 const Albums = (props) => {
   const artists = props.artists;
   const albums = props.albums;
+
+  const history = useHistory();
 
   const output = artists.map((x) => {
 
@@ -39,7 +35,7 @@ const Albums = (props) => {
     }).map((a) => {
       return (
         <div key={a.AlbumId}>
-          <div className="album" key={a.AlbumId}><Link to={`/album/${a.AlbumId}`}>{a.Title}</Link></div>
+          <div className="album"><Link to={`/album/${a.AlbumId}`}>{a.Title}</Link></div>
         </div>
       );
     });
@@ -54,12 +50,17 @@ const Albums = (props) => {
     }
     return null;
 
-    });
+  });
+
+  const handleAdd = () => {
+    history.push('/addalbum');
+  };
 
   return(
     <div key="albums">
-    <h1>Albums</h1>
-    {output}
+      <h1>Albums</h1>
+      <AddButton handleClick={handleAdd} caption="Add Album" />
+      {output}
     </div>
   );
 }

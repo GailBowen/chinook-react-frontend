@@ -62,12 +62,17 @@ ReactDOM.render(
           <Route path={"/album/:albumId"}>
             <AlbumContainer />
           </Route>
+
           <Route path="/artists">
             <ArtistsContainer />
           </Route>
           <Route path={"/artist/:artistId"}>
             <ArtistContainer />
           </Route>
+          <Route path="/addartist">
+            <ArtistContainer />
+          </Route>
+
           <Route path="/customers">
             <CustomersContainer />
           </Route>

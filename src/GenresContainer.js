@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
+import AddButton from './components/AddButton';
 
 import generateLetters from './util/GenerateLetters';
 
@@ -16,11 +18,18 @@ const GenresContainer = (props) => {
 
 const Genres = (props) => {
 
+  const history = useHistory();
+  const [genres, setGenres] = useState([]);
+
   let { loading, error, data } = useQuery(GET_GENRES, { 
     fetchPolicy: "cache-and-network"
   });
 
-  const history = useHistory();
+  useEffect(() => {
+    if (data && data.getGenres) {
+      setGenres(data.getGenres);
+    }
+  }, [data]);
 
   if (loading) {
     return 'Loading';
@@ -30,7 +39,6 @@ const Genres = (props) => {
     throw(error);
   }
 
-  const genres = data.getGenres;
   const letters = generateLetters(genres.map((x) => x.Name));
 
   const indexedGenres = letters.map((l,k) => {
@@ -64,16 +72,5 @@ const Genres = (props) => {
     </div>
   );
 }
-
-const AddButton = (props) => {
-  const handleClick = props.handleClick;
-  const caption = props.caption;
-  
-  return (
-    <div className="buttons">
-      <button onClick={handleClick} className="add">{caption}</button>
-    </div>
-  );
-};
 
 export default GenresContainer;

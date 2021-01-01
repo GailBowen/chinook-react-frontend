@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import { useHistory, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -13,29 +13,44 @@ const ArtistContainer = () => {
   let { artistId } = useParams();
   artistId = parseInt(artistId);
 
+  const initData = {
+    ArtistId: -1,
+    Name : ''
+  };
+
+  const [artist, setArtist] = useState(initData);
+  const [albums, setAlbums] = useState([]);
+
+  const history = useHistory();
+
+  const [updateArtist] = useMutation(UPDATE_ARTIST);
+
   let { loading, error, data } = useQuery(GET_ARTIST, {
     variables: { artistId },
     fetchPolicy: "cache-and-network"
   });
 
+  useEffect(() => {
+    if (data) {
+      if (data.getArtist) {
+        setArtist(data.getArtist);
+      }
+      if (data.getAlbumsByArtist) {
+        setAlbums(data.getAlbumsByArtist);
+      }
+    }
+  }, [data]);
+
   if (error) {
-    throw(error);
+    if (artistId) {
+      throw(error);
+    }
   }
 
   if (loading) {
     return "Loading";
   }
 
-  return <Artist artist={data.getArtist} albums={data.getAlbumsByArtist} />
-};
-
-const Artist = (props) => {
-  const [artist, setArtist] = useState(props.artist);
-  const albums = props.albums;
-
-  const history = useHistory();
-
-  const [updateArtist] = useMutation(UPDATE_ARTIST);
 
   const albumElements = albums.map((l,i) => {
     return ( 
@@ -74,17 +89,18 @@ const Artist = (props) => {
 
     <form>
       <div className="key-values">
-        <KeyValue label="Artist Id" value={artist.ArtistId} />
+      {artist.ArtistId > -1 && <KeyValue label="Artist Id" value={artist.ArtistId} /> }
         <KeyValueEditable label="Name" defaultValue={artist.Name} handleChange={handleNameChange} />
       </div>
       <EditButtons handleSubmit={handleSubmit} handleDelete={handleDelete} canDelete={canDelete} />
     </form>
 
-    <h2>Albums</h2>
-    {albumElements}
+    {artist.ArtistId > -1 && <div>
+      <h2>Albums</h2>
+      {albumElements}
+    </div>}
   </div>
   );
-
 };
 
 export default ArtistContainer;

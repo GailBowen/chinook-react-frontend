@@ -5,16 +5,7 @@ import { Link } from 'react-router-dom';
 
 import generateLetters from './util/GenerateLetters';
 
-const GET_EMPLOYEES = gql`
-{
-  getEmployees{
-    EmployeeId
-    Title
-    FirstName
-    LastName
-  }
-}
-`;
+import { GET_EMPLOYEES } from './graphql/query/employee';
 
 const EmployeesContainer = () => (
   <Query query={GET_EMPLOYEES}>

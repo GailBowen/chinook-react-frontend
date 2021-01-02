@@ -1,42 +1,16 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router-dom';
-import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
-import KeyValue from './components/KeyValue';
 
-const QUERY = gql`
-  query getCustomer($customerId: Int!) {
-    getCustomer(customerId: $customerId) {
-      FirstName
-      LastName
-      Company
-      Address
-      City
-      State
-      Country
-      PostalCode
-      Phone
-      Fax
-      Email
-      SupportRepId
-      SupportRepFirstName
-      SupportRepLastName
-    }
-    getInvoiceByCustomer(customerId: $customerId) {
-      InvoiceId
-      InvoiceDate
-      BillingAddress
-      Total
-    }
-  }
-`;
+import { GET_CUSTOMER } from './graphql/query/customer';
+import KeyValue from './components/KeyValue';
 
 const CustomerContainer = () => {
   let { customerId } = useParams();
   customerId = parseInt(customerId);
 
-  let { loading, error, data } = useQuery(QUERY, {
+  let { loading, error, data } = useQuery(GET_CUSTOMER, {
     variables: { customerId }
   });
 

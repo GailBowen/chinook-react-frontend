@@ -86,6 +86,9 @@ ReactDOM.render(
           <Route path={"/invoice/:invoiceId"}>
             <InvoiceContainer />
           </Route>
+          <Route path="/addcustomer">
+            <CustomerContainer />
+          </Route>
             
           <Route path="/employees">
             <EmployeesContainer />

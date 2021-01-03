@@ -1,33 +1,36 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import { Link } from 'react-router-dom';
+import { useQuery } from 'react-apollo';
+import { Link, useHistory } from 'react-router-dom';
+
+import { GET_CUSTOMERS } from './graphql/query/customer';
+
+import AddButton from './components/AddButton';
 
 import generateLetters from './util/GenerateLetters';
 
-const GET_CUSTOMERS = gql`
-{
-  getCustomers{
-    CustomerId
-    FirstName
-    LastName
-  }
-}
-`;
+const CustomersContainer = () => {
 
-const CustomersContainer = () => (
-  <Query query={GET_CUSTOMERS}>
-    {({loading, data}) => {
-      if (loading) return 'Loading';
-      return <Customers customers={data.getCustomers} />;
-    }}
-  </Query>
-);
+  const { loading, error, data } = useQuery(GET_CUSTOMERS, {
+      fetchPolicy: "cache-and-network",
+  });
+
+  if (error) {
+    throw(error);
+  }
+
+  if (loading) {
+    return "Loading"
+  }
+  
+  return <Customers customers={data.getCustomers} />;
+};
 
 const Customers = (props) => {
   const customers = props.customers;
 
   const letters = generateLetters(customers.map((x) => x.LastName));
+
+  const history = useHistory();
 
   const indexedCustomers = letters.map((l) => {
 
@@ -53,9 +56,14 @@ const Customers = (props) => {
     return null;
   });
 
+  const handleAdd = () => {
+    history.push('/addcustomer');
+  };
+
   return(
     <div key="customers">
       <h1>Customers</h1>
+      <AddButton caption="Add Customer" handleClick={handleAdd} />
       {indexedCustomers}
     </div>
   );

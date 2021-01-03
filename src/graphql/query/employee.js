@@ -5,6 +5,7 @@ export const EMPLOYEE_FRAGMENT = gql`
     EmployeeId
     FirstName
     LastName
+    Title
   }
 `;
 

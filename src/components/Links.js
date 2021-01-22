@@ -13,6 +13,7 @@ const Links = () =>
         <a href="/mediatypes">Media Types</a>&nbsp;
         <a href="/playlists">Playlists</a>&nbsp;
         <a href="/tracks">Tracks</a>&nbsp;
+        <a href="/spotifylinks">Spotify Links</a>&nbsp;
       </div>
     </>
   );

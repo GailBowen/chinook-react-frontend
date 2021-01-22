@@ -27,6 +27,7 @@ import MediaTypesContainer from './MediaTypesContainer';
 import PlaylistsContainer from './PlaylistsContainer';
 import TracksContainer from './TracksContainer';
 import TrackContainer from './TrackContainer';
+import SpotifyLinksContainer from './SpotifyLinksContainer';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -118,6 +119,9 @@ ReactDOM.render(
           </Route>
           <Route path={"/track/:trackId"}>
             <TrackContainer />
+          </Route>
+          <Route path="/spotifylinks">
+            <SpotifyLinksContainer />
           </Route>
         </Switch>
       </BrowserRouter>

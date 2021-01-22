@@ -15,6 +15,7 @@ function App() {
           <DashboardTile url="/mediatypes" caption="Media Types" />
           <DashboardTile url="/playlists" caption="Playlists" />
           <DashboardTile url="/tracks" caption="Tracks" />
+          <DashboardTile url="/spotifylinks" caption="Spotify Links" />
         </div>
       </div>
     </div>

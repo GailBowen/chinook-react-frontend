@@ -31,8 +31,7 @@ const SpotifyLinks = (props) => {
     if (spotifyLinks.length) {
       return (
         <div key={x.spotifyLinkId}>
-          <h2>{x.Description}</h2>
-          <h2>{x.Link}</h2>
+          <Link to={{ pathname: x.Link }} target="_blank">{x.Description}</Link>
         </div>
       );
     }
